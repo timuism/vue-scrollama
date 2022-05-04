@@ -4,20 +4,20 @@
     </div>
 </template>
 
-<script setup lang="ts">
-import scrollama, { ScrollamaInstance, ScrollamaOptions } from 'scrollama';
-import { computed, ref, Ref, onBeforeUnmount, onMounted, defineEmits, useAttrs } from 'vue';
+<script setup>
+import scrollama from 'scrollama';
+import { computed, ref, onBeforeUnmount, onMounted, useAttrs } from 'vue';
 
-let scroller:ScrollamaInstance = scrollama();
+let scroller = scrollama();
 const attrs = useAttrs()
 const emit = defineEmits(['step-progress', 'step-enter', 'step-exit'])
-const el: Ref<HTMLDivElement | null> = ref(null)
+const el = ref(null)
 const opts = computed(() => {
-    let rootElem = el.value as HTMLDivElement
+    let rootElem = el.value
     return Object.assign({}, {
         step: Array.from(rootElem.children),
         progress: !!attrs['step-progress']
-    }, attrs) as ScrollamaOptions
+    }, attrs)
 })
 
 onMounted(() => {
@@ -44,6 +44,4 @@ onBeforeUnmount(() => {
 function handleResize(){
     scroller.resize()
 }
-
-
 </script>
